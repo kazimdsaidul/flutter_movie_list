@@ -47,28 +47,14 @@ class Result {
   num vote_count;
 
   Result(
-      {this.adult,
-      this.backdrop_path,
-      this.genre_ids,
-      this.id,
-      this.original_language,
-      this.original_title,
-      this.overview,
-      this.popularity,
-      this.poster_path,
-      this.release_date,
-      this.title,
-      this.video,
-      this.vote_average,
-      this.vote_count});
+      {this.adult, this.backdrop_path, this.genre_ids, this.id, this.original_language, this.original_title, this.overview, this.popularity, this.poster_path, this.release_date, this.title, this.video, this.vote_average, this.vote_count});
 
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
       adult: json['adult'],
       backdrop_path: json['backdrop_path'],
-      genre_ids: json['genre_ids'] != null
-          ? new List<int>.from(json['genre_ids'])
-          : null,
+      genre_ids: json['genre_ids'] != null ? new List<int>.from(
+          json['genre_ids']) : null,
       id: json['id'],
       original_language: json['original_language'],
       original_title: json['original_title'],

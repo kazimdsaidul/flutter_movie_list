@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/popular_movie_bloc.dart';
@@ -9,10 +10,11 @@ class PopularMovieList extends StatefulWidget {
 }
 
 class _PopularMovieListState extends State<PopularMovieList> {
+  final apiKey = 'b5551849719b4d25eefef7ea2e1564a8';
+
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PopularMovieBloc>(context).add(NeedData());
   }
 
   @override
@@ -20,12 +22,35 @@ class _PopularMovieListState extends State<PopularMovieList> {
     return Container(
       child: BlocBuilder<PopularMovieBloc, PopularMovieState>(
           builder: (context, snapshot) {
-        if (snapshot is MovieList) {
-          return Text("done${snapshot.result.length}");
+            if (snapshot is MovieList) {
+          var listProject = snapshot.result;
+          return ListView.builder(
+              itemCount: listProject.length,
+              itemBuilder: (context, index) {
+                var product = listProject[index];
+                return ListTile(
+                  leading: Container(
+                    height: 200,
+                    width: 200,
+                    child: FadeInImage.assetNetwork(
+                      fit: BoxFit.cover,
+                      placeholder: 'assets/loading.gif',
+                      image: "https://image.tmdb.org/t/p/original" +
+                          product.poster_path +
+                          "?api_key=" +
+                          apiKey,
+                    ),
+                  ),
+                  title: Text(product.title),
+                  subtitle: Text("\$${product.popularity}"),
+                );
+              });
         } else {
-          return Text("Popular list");
-        }
-      }),
+              BlocProvider.of<PopularMovieBloc>(context).add(NeedData());
+
+              return Text("Popular list");
+            }
+          }),
     );
   }
 }

@@ -7,7 +7,6 @@ import 'package:flutter_movie_list/network/repository.dart';
 import 'package:meta/meta.dart';
 
 part 'popular_movie_event.dart';
-
 part 'popular_movie_state.dart';
 
 class PopularMovieBloc extends Bloc<PopularMovieEvent, PopularMovieState> {
