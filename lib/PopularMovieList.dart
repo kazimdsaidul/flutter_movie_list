@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_movie_list/MovieDetailsPage.dart';
 
 import 'bloc/popular_movie_bloc.dart';
 
@@ -30,10 +31,10 @@ class _PopularMovieListState extends State<PopularMovieList> {
                 var product = listProject[index];
                 return ListTile(
                   leading: Container(
-                    height: 200,
-                    width: 200,
+                    height: 50,
+                    width: 50,
                     child: FadeInImage.assetNetwork(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       placeholder: 'assets/loading.gif',
                       image: "https://image.tmdb.org/t/p/original" +
                           product.poster_path +
@@ -43,6 +44,13 @@ class _PopularMovieListState extends State<PopularMovieList> {
                   ),
                   title: Text(product.title),
                   subtitle: Text("\$${product.popularity}"),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MovieDetailsPage(product)),
+                    );
+                  },
                 );
               });
         } else {
