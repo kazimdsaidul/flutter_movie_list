@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   sqflite:
   floor: ^0.18.0
+  cached_network_image: ^2.5.0
 
 
 

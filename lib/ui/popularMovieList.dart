@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,21 +30,18 @@ class _PopularMovieListState extends State<PopularMovieList> {
               itemCount: listProject.length,
               itemBuilder: (context, index) {
                 var product = listProject[index];
-                return ListTile(
-                  leading: Container(
-                    height: 50,
-                    width: 50,
-                    child: FadeInImage.assetNetwork(
-                      fit: BoxFit.contain,
-                      placeholder: 'assets/loading.gif',
-                      image: "https://image.tmdb.org/t/p/original" +
+
+                return GestureDetector(
+                  child: CachedNetworkImage(
+                      imageUrl: "https://image.tmdb.org/t/p/original" +
                           product.poster_path +
                           "?api_key=" +
                           apiKey,
-                    ),
-                  ),
-                  title: Text(product.title),
-                  subtitle: Text("\$${product.popularity}"),
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                  value: downloadProgress.progress),
+                      errorWidget: (context, url, error) => Icon(Icons.error)),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -54,11 +52,11 @@ class _PopularMovieListState extends State<PopularMovieList> {
                 );
               });
         } else {
-              BlocProvider.of<PopularMovieBloc>(context).add(NeedData());
+          BlocProvider.of<PopularMovieBloc>(context).add(NeedData());
 
-              return Text("Popular list");
-            }
-          }),
+          return Text("Popular list");
+        }
+      }),
     );
   }
 }
